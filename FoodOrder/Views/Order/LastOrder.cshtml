@@ -11,13 +11,13 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="align-middle text-center">
                 @Html.DisplayName("Product name")
             </th>
-            <th>
+            <th class="align-middle text-center">
                 @Html.DisplayName("Price")
             </th>
-            <th>
+            <th class="align-middle text-center">
                 @Html.DisplayName("Amount")
             </th>
             <th></th>
@@ -27,28 +27,28 @@
         @foreach (var item in Model.orderItems)
         {
             <tr>
-                <td>
+                <td class="align-middle text-center">
                     @Html.DisplayFor(modelItem => item.Product.Name)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Price)
+                <td class="align-middle text-center">
+                    @item.Product.Price.ToString("C")
                 </td>
-                <td>
+                <td class="align-middle text-center">
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
-                <td>
+                <td class="align-middle text-center">
                     <a class="btn btn-primary" asp-controller="OrderItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a class="btn btn-danger" asp-controller="OrderItems" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
         <tr>
-            <td></td>
-            <td>
+            <td class="col-1"></td>
+            <td class="align-middle text-center">
                 @Html.DisplayName("Total:")
             </td>
-            <td>
-                @Html.DisplayFor(o => o.Order.TotalPrice)
+            <td class="align-middle text-center">
+                @Model.Order.TotalPrice.ToString("C")
             </td>
             <td>
                 <a class="btn btn-outline-warning" asp-controller="Checks" asp-action="Create" asp-route-id="@Model.Order.Id">Check out</a>

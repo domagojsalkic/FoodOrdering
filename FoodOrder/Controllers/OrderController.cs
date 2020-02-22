@@ -22,12 +22,6 @@ namespace FoodOrder.Controllers
         }
         public IActionResult Index()
         {
-            var lastRecord = _context.Order.MaxAsync(o => o.Id).Result;
-
-            if (!_context.Order.FirstOrDefaultAsync(o => o.Id == lastRecord).Result.IsPayed)
-            {
-                return RedirectToAction(nameof(LastOrder), "Order");
-            }
             return View();
         }
 
@@ -78,19 +72,39 @@ namespace FoodOrder.Controllers
 
         public async Task<IActionResult> AllOrders()
         {
-
-            var orders = await TotalPrice();
-            return View(orders);
-        }
-
-        public async Task<IActionResult> AllOrders2()
-        {
             AllOrdersViewModel allOrdersVM = new AllOrdersViewModel()
             {
                 Checks = await _context.Check.Include(o => o.Order).Include(o => o.Payment).ToListAsync(),
                 Orders = await TotalPrice()
             };
             return View(allOrdersVM);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Order
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var order = await _context.Order.FindAsync(id);
+            _context.Order.Remove(order);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), "Order");
         }
 
         private async Task<List<Order>> TotalPrice()

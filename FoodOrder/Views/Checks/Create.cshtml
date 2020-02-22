@@ -25,7 +25,14 @@
                 <select asp-for="PaymentId" class ="form-control" asp-items="ViewBag.PaymentId"></select>
             </div>
             <div class="form-group">
-                <partial name="_CreateAndBackToListButtons"/>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-controller="Order" asp-action="AllOrders" class="btn btn-success form-control">Back to list</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

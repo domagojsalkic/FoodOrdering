@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Order>
-
+﻿@model FoodOrder.ViewModels.AllOrdersViewModel
 @{
     ViewData["Title"] = "AllOrders";
 }
@@ -9,38 +8,53 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="align-middle text-center">
                 @Html.DisplayName("Order ID")
             </th>
-            <th>
+            <th class="align-middle text-center">
                 @Html.DisplayName("Total price")
             </th>
+            <th class="align-middle text-center">
+                @Html.DisplayName("Payment method")
+            </th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Orders)
         {
             <tr>
-                <td>
+                <td class="align-middle text-center">
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                <td class="align-middle text-center">
+                    @item.TotalPrice.ToString("C")
                 </td>
-                <td>
-                    <div class="form-group row">
-                        @if (!item.IsPayed)
+                <td class="align-middle text-center">
+                    @foreach (var item2 in Model.Checks)
+                    {
+                        if (item.Id == item2.OrderId)
                         {
-                            <div class="col-3">
-                                <a class="btn btn-outline-warning" asp-controller="Checks" asp-action="Create" asp-route-id="@item.Id">Check out</a>
-
-                            </div>
-                            <div class="col-3">
-                                <input type="submit" value="Delete" asp-route-id="@Model" class="btn btn-danger form-control" />
-                            </div>
+                            @Html.DisplayFor(modelItem => item2.Payment.PaymentMethod)
                         }
-                    </div>
+                    }
+                </td>
+                <td class="col-2">
+                    @if (!item.IsPayed)
+                    {
+                        <a class="btn btn-outline-warning form-control" asp-controller="Checks" asp-action="Create" asp-route-id="@item.Id">Check out</a>
+                    }
+                </td>
+                <td class="col-1">
+                    @if (!item.IsPayed)
+                    {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    }
+                </td>
+                <td class="col-1">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
                 </td>
             </tr>
         }

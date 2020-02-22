@@ -39,7 +39,7 @@ namespace FoodOrder.Controllers
             {
                 _context.Add(check);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Order");
+                return RedirectToAction("AllOrders", "Order");
             }
 
             ViewData["OrderId"] = new SelectList(_context.Order, "Id", "Id", check.OrderId);
