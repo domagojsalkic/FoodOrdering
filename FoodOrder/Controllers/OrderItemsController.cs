@@ -128,7 +128,7 @@ namespace FoodOrder.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Details),"Order");
+                return RedirectToAction("LastOrder","Order");
             }
             ViewData["OrderId"] = new SelectList(_context.Set<Order>(), "Id", "Id", orderItem.OrderId);
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Name", orderItem.ProductId);
@@ -163,7 +163,7 @@ namespace FoodOrder.Controllers
             var orderItem = await _context.OrderItem.FindAsync(id);
             _context.OrderItem.Remove(orderItem);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details),"Order");
+            return RedirectToAction("LastOrder","Order");
         }
 
         private bool OrderItemExists(int id)
