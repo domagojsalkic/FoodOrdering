@@ -1,0 +1,58 @@
+﻿@model FoodOrder.ViewModels.OrderViewModel
+
+@{
+    ViewData["Title"] = "LastOrder";
+}
+
+<h1>Order details</h1>
+<h2>Order ID: @Html.DisplayFor(o => o.Order.Id)</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Product name")
+            </th>
+            <th>
+                @Html.DisplayName("Price")
+            </th>
+            <th>
+                @Html.DisplayName("Amount")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.orderItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="OrderItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-danger" asp-controller="OrderItems" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td>
+                @Html.DisplayName("Total:")
+            </td>
+            <td>
+                @Html.DisplayFor(o => o.Order.TotalPrice)
+            </td>
+            <td>
+                <a class="btn btn-outline-warning" asp-controller="Checks" asp-action="Create" asp-route-id="@Model.Order.Id">Check out</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

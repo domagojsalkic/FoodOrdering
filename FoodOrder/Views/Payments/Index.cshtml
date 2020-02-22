@@ -1,0 +1,33 @@
+﻿@model IEnumerable<FoodOrder.Models.Payment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Payments</h1>
+
+<p>
+   <partial name="_CreateButtonPartial"/>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Payment method")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentMethod)
+            </td>
+            <td>
+               <partial name="_TableButtonsPartial" model="item.Id"/>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

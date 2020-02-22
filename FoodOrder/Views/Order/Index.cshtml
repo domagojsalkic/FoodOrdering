@@ -1,0 +1,27 @@
+﻿@model FoodOrder.Models.Order
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<hr />
+<div class="container" align="center">
+    <div class="col-md-10">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="card text-white bg-dark mb-3" style="text-align: center; min-width: 15rem">
+                <div class="card-body">
+                    <br /><br />
+                    <h4 class="card-title">New order</h4>
+                    <a asp-></a>
+                    <br /><br />
+                    <input type="submit" class="col-5 btn btn-success btn-lg" value="Add">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
